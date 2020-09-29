@@ -10,6 +10,7 @@
 
     <properties>
         <hibernate.version>5.4.21.Final</hibernate.version>
+        <postgresql.version>42.2.8</postgresql.version>
     </properties>
 
     <dependencies>
@@ -17,6 +18,11 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
         </dependency>
     </dependencies>
 </project>
