@@ -13,6 +13,6 @@
 
         <property name="show_sql">true</property>
 
-        <mapping class ="entities.Event"/>
+        <mapping class ="entity.dto.Event"/>
     </session-factory>
 </hibernate-configuration>

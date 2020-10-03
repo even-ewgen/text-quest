@@ -1,0 +1,24 @@
+Java RX
+Java specification
+
+Работа с БД из scheduler, а не из основного потока
+
+public class MyAlgorithm {
+    public void execute(int a, int b) {
+
+        getEvent()
+                .doOnNext(System.out::println)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .flatMapCompletable(this::save)
+                .subscribe();
+    }
+
+    private Completable save(List<String> list) {
+        return Completable.complete();
+    }
+
+    private Observable<List<String>> getEvent() {
+        return
+    }
+}

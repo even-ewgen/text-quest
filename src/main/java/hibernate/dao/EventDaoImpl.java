@@ -1,12 +1,12 @@
 package hibernate.dao;
 
-import entities.Event;
+import entity.dto.Event;
 import hibernate.util.HibernateSession;
 import org.hibernate.Session;
 
 import java.util.List;
 
-public class EventDaoImpl implements IDao<Event> {
+public class EventDaoImpl implements IEventDao {
 
     public List<Event> findAll() {
         try(Session session = HibernateSession.getSession()) {
@@ -21,26 +21,30 @@ public class EventDaoImpl implements IDao<Event> {
     }
 
     public void save(Event entity) {
-        try(Session session = HibernateSession.getSession()) {
-            session.getTransaction().begin();
+        try(Session session = HibernateSession.getSessionWithTransaction()) {
             session.save(entity);
-            session.getTransaction().commit();
+            HibernateSession.commit();
+        }
+    }
+
+    public void save(List<Event> entity) {
+        try(Session session = HibernateSession.getSessionWithTransaction()) {
+            entity.forEach(session::save);
+            HibernateSession.commit();
         }
     }
 
     public void update(Event entity) {
-        try(Session session = HibernateSession.getSession()) {
-            session.getTransaction().begin();
+        try(Session session = HibernateSession.getSessionWithTransaction()) {
             session.update(entity);
-            session.getTransaction().commit();
+            HibernateSession.commit();
         }
     }
 
     public void delete(Event entity) {
-        try(Session session = HibernateSession.getSession()) {
-            session.getTransaction().begin();
+        try(Session session = HibernateSession.getSessionWithTransaction()) {
             session.delete(entity);
-            session.getTransaction().commit();
+            HibernateSession.commit();
         }
     }
 }

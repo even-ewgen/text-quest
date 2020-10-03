@@ -11,6 +11,8 @@
     <properties>
         <hibernate.version>5.4.21.Final</hibernate.version>
         <postgresql.version>42.2.8</postgresql.version>
+        <poi.version>4.0.0</poi.version>
+        <xlsx.streamer.version>2.1.0</xlsx.streamer.version>
     </properties>
 
     <dependencies>
@@ -23,6 +25,21 @@
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>${postgresql.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>${poi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>${poi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.monitorjbl</groupId>
+            <artifactId>xlsx-streamer</artifactId>
+            <version>${xlsx.streamer.version}</version>
         </dependency>
     </dependencies>
 </project>

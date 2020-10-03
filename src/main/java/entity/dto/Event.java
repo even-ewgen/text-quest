@@ -1,4 +1,4 @@
-package entities;
+package entity.dto;
 
 import javax.persistence.*;
 
