@@ -1,7 +1,7 @@
-package hibernate.dao;
+package core.hibernate.dao;
 
+import core.hibernate.util.HibernateSession;
 import entity.dto.Event;
-import hibernate.util.HibernateSession;
 import org.hibernate.Session;
 
 import java.util.List;

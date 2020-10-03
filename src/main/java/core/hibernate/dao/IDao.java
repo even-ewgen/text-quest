@@ -1,4 +1,4 @@
-package hibernate.dao;
+package core.hibernate.dao;
 
 import java.util.List;
 

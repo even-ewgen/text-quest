@@ -1,4 +1,4 @@
-package hibernate.util;
+package core.hibernate.util;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -13,7 +13,8 @@ public class HibernateSession {
 
     static {
         try {
-            sessionFactory = new Configuration().configure().buildSessionFactory();
+            Configuration configuration = new Configuration().addResource("hibernate.cfg.xml");
+            sessionFactory = configuration.configure().buildSessionFactory();
         } catch (HibernateException e) {
             e.printStackTrace();
         }
@@ -26,6 +27,7 @@ public class HibernateSession {
     public static Session getSessionWithTransaction() throws HibernateException {
         session = sessionFactory.openSession();
         transaction = session.getTransaction();
+        transaction.begin();
         return session;
     }
 
