@@ -13,16 +13,17 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class ExcelReader implements IExcelReader {
+public class EventReaderImpl implements IReader<Event> {
 
-    private List<Event> events = new ArrayList<>();
+    private static final String FILE_NAME = "events.xlsx";
 
     @Override
-    public List<Event> read() {
+    public List<Event> read() throws IOException {
+        List<Event> events = new ArrayList<>();
         /*Входящий поток из файла NAMES.xlsx*/
         try (
                 InputStream is = new FileInputStream(
-                        new File("events.xlsx"));
+                        new File(FILE_NAME));
                 Workbook workbook = StreamingReader.builder()
                         .rowCacheSize(100)
                         .bufferSize(4096)
@@ -31,7 +32,6 @@ public class ExcelReader implements IExcelReader {
             Iterator<Row> rowIterator = sheet.iterator();
             System.out.println(sheet.getSheetName());
 
-            int i = 1;
             /*Проходит по строкам таблицы*/
             rowIterator.next();
             while (rowIterator.hasNext()) {
@@ -41,7 +41,6 @@ public class ExcelReader implements IExcelReader {
                 Row row = rowIterator.next();
                 // Создание итератора для прохода по каждой ячейке таблицы внутри строки
                 Iterator<Cell> cellIterator = row.cellIterator();
-                int j = 1;
                 while (cellIterator.hasNext()) {
 
                     Cell cell = cellIterator.next();
@@ -52,33 +51,15 @@ public class ExcelReader implements IExcelReader {
                     //Действия с данными производятся в зависимости от их типа
                     try {
                         switch (cellType) {
-                            case _NONE:
-                                System.out.print("");
-                                System.out.print("\t");
-                                break;
                             case NUMERIC:
                                 tableCell.setId((int) cell.getNumericCellValue());
-                                System.out.print(cell.getNumericCellValue());
-                                System.out.print("\t");
                                 break;
                             case STRING:
-                                //Первая строка таблицы, где содержатся имена полей, выводится в консоль,
-                                //но не помещается в таблицу базы данных
-                                if (i == 0) {
-                                    System.out.print(cell.getStringCellValue());
-                                    System.out.print("\t");
-                                }
-                                else {
-                                    //Значения попадают в базу данных, начиная со второй строки
-                                    tableCell.setText(cell.getStringCellValue());
-
-                                    System.out.print(cell.getStringCellValue());
-                                    System.out.print("\t");
-                                }
+                                //Значения попадают в базу данных, начиная со второй строки
+                                tableCell.setText(cell.getStringCellValue());
                                 break;
                             case ERROR:
-                                System.out.print("!");
-                                System.out.print("\t");
+                                System.out.println("error in EventReader");
                                 break;
 
                         }
@@ -87,19 +68,12 @@ public class ExcelReader implements IExcelReader {
                         e.printStackTrace();
                         isBreak = true;
                     }
-                    j++;
-
                 }
-                i++;
-                System.out.println("");
-
                 //Строка таблицы попадает в таблицу базы данных если формат данных соответствует заданному
                 //если не было разрывов в таблице Excel. Иначе осуществляется переходк следующей строке
                 if (!isBreak)
                     events.add(tableCell);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
         return events;
     }

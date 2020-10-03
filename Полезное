@@ -7,9 +7,11 @@ Java specification
 
 Паттерн Observer
 
-public class MyAlgorithm {
-    public void execute(int a, int b) {
+Образить архитектуру кода схематично
 
+public class MyAlgorithm {
+
+    public void execute(int a, int b) {
         getEvent()
                 .doOnNext(System.out::println)
                 .subscribeOn(Schedulers.io())
