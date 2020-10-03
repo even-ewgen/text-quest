@@ -3,6 +3,10 @@ Java specification
 
 Работа с БД из scheduler, а не из основного потока
 
+Работать с БД не DAO, а Repository
+
+Паттерн Observer
+
 public class MyAlgorithm {
     public void execute(int a, int b) {
 

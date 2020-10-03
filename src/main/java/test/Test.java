@@ -1,6 +1,5 @@
 package test;
 
-import core.filereader.ExcelReader;
 import core.hibernate.dao.EventDaoImpl;
 import entity.dto.Event;
 
